@@ -4,12 +4,15 @@ services:
   django-server:
     build: techk
     command: "python3 manage.py runserver 0.0.0.0:8000"
-    # volumes: 
-      # - /scrapper_django:/code     
+    volumes: 
+    - ./techk:/code     
     ports:
       - "8000:8000"
   vue-app:
     build: vue-app
+    command: "npm run serve"
+    volumes: 
+    - ./vue-app:/code  
     ports: 
       - "8080:8080"
     depends_on: 
