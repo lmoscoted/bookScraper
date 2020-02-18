@@ -114,6 +114,14 @@ export default {
       await axios.delete(urlCatDelete)
         .then(res => { this.rows = this.rows.filter(cat => cat.id !== categoryId) })
         .catch(err => console.log(err))
+    },
+    routerAbout: function (row) {
+      this.$router.push('about')
+    },
+    showBooks: function (row) {
+      // var urlBooksCat = urlCategories + row.id + '/books'
+      this.$router.push({ name: 'Books', params: { id: row.id, name: row.name } })
+      // console.log(urlBooksCat)
     }
 
   }
