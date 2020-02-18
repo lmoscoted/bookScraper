@@ -106,3 +106,58 @@ def get_upc(book_detail_soup):
         if tr.find('th').get_text(strip=True) == 'UPC':
             upc = tr.find('td').get_text(strip=True)
     return upc        
+
+
+def get_data(url):
+    '''
+    Get the books data from the given url page. 
+    A page has 20 books.
+    http://books.toscrape.com/catalogue/page-1.html  input 
+    '''
+    title_list = []
+    description_list = []
+    price_list = []
+    upc_list = []
+    stock_list = []
+    thumbnail_list = []
+    category_id_list = []
+    # Get the content from the page
+    soup = get_content_bs4(url)
+    url_base = url.split('catalogue')[0]
+    url_base_catalogue = url.split('page')[0]
+    # Select all the books
+    books = soup.select('article.product_pod')
+    thumbnail = ''
+    price = ''
+    title = ''
+    url_book = ''
+    # Loop over the books, and get all the required data
+    for book in books:
+        if book.select('img.thumbnail'):
+            thumbnail_ = book.select('img.thumbnail')[0]['src']
+            thumbnail = thumbnail_.replace('..',url_base)
+        price = book.select('p.price_color')[0].get_text(strip=True)
+        title = book.select('h3 a')[0]['title'].strip()
+        url_book_ = book.select('h3 a')[0]['href']
+        url_book = url_base_catalogue + url_book_
+        # Get the data tha only is in the book page
+        book_details = get_book_details(url_book,url_base_catalogue)
+
+        title_list.append(title)
+        # [description,stock,upc,category_id]
+        description_list.append(book_details[0]) 
+        price_list.append(price)
+        upc_list.append(book_details[2])
+        stock_list.append(book_details[1])
+        thumbnail_list.append(thumbnail)
+        category_id_list.append(book_details[3])
+    # Define the columns name for put the results
+    # into the database
+    columnas = ['title','price','product_description','upc','stock',
+                'thumbnail','category_id']
+    # Create the dataframe            
+    df = pd.DataFrame(list(zip(title_list,price_list,
+                        description_list,upc_list,
+        stock_list,thumbnail_list,category_id_list)),
+                                columns=columnas)
+    return  df # Return a dataframe with the data
