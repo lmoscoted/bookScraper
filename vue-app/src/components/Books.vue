@@ -152,6 +152,19 @@ export default {
       axios.get(urlBooksCat)
         .then(res => { this.books = res.data })
         .catch(err => console.log(err))
+    },
+    stockFilterFn: function (data, filterString) {
+      var x = parseInt(filterString)
+      return data === x
+    },
+    filterFn: function (data, filterString) {
+      filterString = filterString.toLowerCase().trim()
+      data = data.toLowerCase().trim()
+      if (filterString.length > 0) {
+        if (data.indexOf(filterString) !== -1) {
+          return true
+        }
+      }
     }
   }
 }
