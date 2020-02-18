@@ -24,6 +24,7 @@ class BookView(mixins.DestroyModelMixin,
     serializer_class = BookSerializer
     queryset = Book.objects.all()
 
+
 # Class view for only list the books from
 # a specific category
 class CategoryBooksView(generics.ListAPIView):
