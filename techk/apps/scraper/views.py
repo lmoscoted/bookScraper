@@ -11,6 +11,7 @@ from .services import get_data_scrapper
 # Class view for only list, delete categories
 class CategoryView(mixins.DestroyModelMixin,
                     mixins.ListModelMixin,
+                    mixins.RetrieveModelMixin,
                     viewsets.GenericViewSet):
 
     serializer_class = CategorySerializer 

@@ -21,5 +21,5 @@ from django.urls import path
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     path('',include('apps.scraper.urls')),
-    url(r'^api-auth/', include('rest_framework.urls'))
+    # url(r'^api-auth/', include('rest_framework.urls'))
 ]
