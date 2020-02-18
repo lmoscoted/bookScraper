@@ -1,0 +1,16 @@
+version: '3'
+  
+services:
+  django-server:
+    build: techk
+    command: "python3 manage.py runserver 0.0.0.0:8000"
+    # volumes: 
+      # - /scrapper_django:/code     
+    ports:
+      - "8000:8000"
+  vue-app:
+    build: vue-app
+    ports: 
+      - "8080:8080"
+    depends_on: 
+      - "django-server"   
