@@ -30,6 +30,19 @@ def get_content_bs4(url):
         print(e)
         return None 
 
+def get_categories(url):
+    """ Get all categories both id and names  """
+    soup= get_content_bs4(url)
+    categories_soup = soup.select('ul.nav.nav-list ul li a')
+    categories_list = []
+    cat_dict = {}
+    for c in categories_soup:
+        url_category = c['href']
+        category_id = get_category_id(url_category)
+        category_name = c.get_text(strip=True)
+        cat_dict = {'id':category_id ,'name': category_name}
+        categories_list.append(cat_dict)
+    return categories_list
 
 
 def get_urls_publicacion(url):
