@@ -15,11 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url, include, path
 from django.contrib import admin
-from apps.base.views import index
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    path('',include('books.urls')),
+    path('',include('apps/scraper.urls')),
     url(r'^api-auth/', include('rest_framework.urls'))
 ]

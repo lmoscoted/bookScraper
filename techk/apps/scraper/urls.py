@@ -2,7 +2,7 @@ from django.urls import path, include, re_path
 from . import views
 from rest_framework import routers
 
-# Default router w
+# Default router 
 router = routers.DefaultRouter()
 # Register the category url 
 router.register('categories',views.CategoryView, basename='Category')
