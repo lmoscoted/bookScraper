@@ -107,6 +107,13 @@ export default {
           return true
         }
       }
+    },
+    deleteCategory: async function (categoryId) {
+      var urlCatDelete = urlCategories + categoryId + '/'
+      // console.log(urlCatDelete)
+      await axios.delete(urlCatDelete)
+        .then(res => { this.rows = this.rows.filter(cat => cat.id !== categoryId) })
+        .catch(err => console.log(err))
     }
 
   }
