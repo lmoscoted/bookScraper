@@ -161,3 +161,25 @@ def get_data(url):
         stock_list,thumbnail_list,category_id_list)),
                                 columns=columnas)
     return  df # Return a dataframe with the data
+
+
+def cuncurrent_scrapper(url_paginas):
+    '''
+    Get the data from the whole site by running
+    multi-threading. 
+    '''
+    # Define the columns name (database name columns)
+    columnas = ['title','price','product_description','upc',
+    'stock', 'thumbnail','category_id']
+    # Content manager for running the multi-threading task
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        # Empty dataframe with the columns name
+        df_final = pd.DataFrame(columns=columnas)
+        # Get the result for every page
+        results = executor.map(get_data, url_paginas)
+        # Append the result to the initial dataframe
+        for result in results:
+            df_final = df_final.append(result)
+        # Convert the dataframe into a 
+        # Dictionario {{colum name: vale,...},{colum name: vale,...}}
+    return df_final.to_dict('records')    
