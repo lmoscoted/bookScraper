@@ -59,7 +59,8 @@ import axios from 'axios'
 
 // const urlCategories = 'http://django-server:8000/categories/' // Definir url Docker
 // const urlBooks = 'http://django-server:8000/books/'
-const urlCategories = 'http://192.168.99.100:8000/categories/' // Definir url Docker
+// const urlCategories = 'http://192.168.99.100:8000/categories/' // Definir url Docker
+const urlCategories = 'http://127.0.0.1:8000/categories/' // Definir url Docker
 
 export default {
   name: 'Books',
@@ -142,7 +143,7 @@ export default {
   created () {
     this.categoryId = this.$route.params.id
     this.categoryName = this.$route.params.name
-    var urlBooksCat = urlCategories + this.categoryId + '/books'
+    var urlBooksCat = urlCategories + this.categoryId + '/books/'
     this.getBooks(urlBooksCat)
     console.log('api', urlBooksCat)
   },
