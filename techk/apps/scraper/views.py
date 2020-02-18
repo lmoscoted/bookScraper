@@ -27,7 +27,7 @@ class CategoryView(mixins.DestroyModelMixin,
     categories = scraper_data['categories']
     books = scraper_data['books']
 
-    # Save categories into DB
+    # Save categories into DB 
     for category in categories:
         category_db = Category(**category)
         category_db = category_db.save()

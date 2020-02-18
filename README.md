@@ -2,15 +2,12 @@
 
 ## Objetivo
 ---
-Por medio de este test se evaluarán algunos de tus conocimientos que nos interesan como desarrollador.
-
+Desarrollar una aplicacion en Django para que obtenga informacion de internet y esta
+pueda ser mostrada en otra aplicacion desarrollada en Vue. Además, de poder ser consultada la informacion por medio de una tabla se podran eliminar registros por medio de una API hecha con Django Rest Framework.
 ## Instrucciones de uso
 ---
-1. [Duplica](https://help.github.com/es/github/creating-cloning-and-archiving-repositories/duplicating-a-repository) el proyecto
-2. Cambiar su [visibilidad](https://help.github.com/es/github/administering-a-repository/setting-repository-visibility) a privado
-3. Agrega al usuario `techk-devs` como colaborador dentro del repositorio
-4. Instalar cliente de [Docker](https://www.docker.com/)
-5. Instalar [Docker Compose](https://docs.docker.com/compose/)
+1. Instalar cliente de [Docker](https://www.docker.com/)
+2. Instalar [Docker Compose](https://docs.docker.com/compose/)
 6. Levantar el proyecto:
     * `$ cd path/to/project/fullstack/techk`
     * `$ docker-compose up`
