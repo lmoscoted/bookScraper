@@ -57,8 +57,10 @@ import 'vue-good-table/dist/vue-good-table.css'
 import { VueGoodTable } from 'vue-good-table'
 import axios from 'axios'
 
-// const urlCategories = 'http://django-server:8000/categories/' // Definir url Docker
 // const urlBooks = 'http://django-server:8000/books/'
+// const urlBooks = 'http://192.168.99.100:8000/books/'
+const urlBooks = 'http://127.0.0.1:8000/books/'
+// const urlCategories = 'http://django-server:8000/categories/' // Definir url Docker
 // const urlCategories = 'http://192.168.99.100:8000/categories/' // Definir url Docker
 const urlCategories = 'http://127.0.0.1:8000/categories/' // Definir url Docker
 
@@ -165,6 +167,12 @@ export default {
           return true
         }
       }
+    },
+    deleteBook: async function (bookId) {
+      var urlBookDelete = urlBooks + bookId
+      await axios.delete(urlBookDelete)
+        .then(res => { this.books = this.books.filter(book => book.id !== bookId) })
+        .catch(err => console.log(err))
     }
   }
 }
