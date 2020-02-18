@@ -29,4 +29,14 @@ class BookView(mixins.DestroyModelMixin,
 # a specific category
 class CategoryBooksView(generics.ListAPIView):
     serializer_class = BookSerializer
-    queryset = Book.objects.all()
+
+    def get_queryset(self):
+        # Get the primary from the url
+        # And get all the books for 
+        # that category
+        cat_id = self.kwargs.get('pk', None)
+        if cat_id is not None:
+            books_category =  Book.objects.filter(category_id=cat_id)
+            return books_category
+        else: # If not pk is provided, return []
+            return Book.objects.none()
