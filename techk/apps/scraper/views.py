@@ -6,7 +6,7 @@ from rest_framework import viewsets, generics, mixins
 
 from .models import Category, Book
 from .serializer import CategorySerializer, BookSerializer
-
+from .services import get_data_scrapper
 
 # Class view for only list, delete categories
 class CategoryView(mixins.DestroyModelMixin,
@@ -14,7 +14,28 @@ class CategoryView(mixins.DestroyModelMixin,
                     viewsets.GenericViewSet):
 
     serializer_class = CategorySerializer 
-    queryset = Category.objects.all()                
+    # Delete all records in the category table 
+    # (truncate)
+    Category.objects.all().delete()
+    # Delete all records in the book table 
+    # (truncate)
+    Book.objects.all().delete()
+
+    # Data from the scrapper (books and categories)
+    scraper_data = get_data_scrapper()
+    categories = scraper_data['categories']
+    books = scraper_data['books']
+
+    # Save categories into DB
+    for category in categories:
+        category_db = Category(**category)
+        category_db = category_db.save()
+    # Save books into DB    
+    for book in books:
+        book_db = Book(**book)
+        book_db = book_db.save()
+
+    queryset = Category.objects.all()               
 
 
 # Class view for only delete books

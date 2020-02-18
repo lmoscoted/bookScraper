@@ -3,6 +3,7 @@ import math
 
 from bs4 import BeautifulSoup
 import pandas as pd 
+import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
