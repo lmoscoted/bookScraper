@@ -55,11 +55,103 @@
 // import the styles
 import 'vue-good-table/dist/vue-good-table.css'
 import { VueGoodTable } from 'vue-good-table'
+import axios from 'axios'
+
+// const urlCategories = 'http://django-server:8000/categories/' // Definir url Docker
+// const urlBooks = 'http://django-server:8000/books/'
+const urlCategories = 'http://192.168.99.100:8000/categories/' // Definir url Docker
+
 export default {
   name: 'Books',
   // add to component
   components: {
     VueGoodTable
+  },
+  data () {
+    return {
+      columns: [
+        {
+          label: 'Title',
+          field: 'title',
+          filterOptions: {
+            enabled: true, // enable filter for this column
+            placeholder: 'Search title', // placeholder for filter input
+            filterValue: '', // initial populated value for this filter
+            filterFn: this.filterFn// custom filter function that
+          }
+        },
+        {
+          label: 'Thumbnail',
+          field: 'thumbnail'
+        },
+        {
+          label: 'Description',
+          field: 'product_description',
+          // type: 'number',
+          filterOptions: {
+            enabled: true, // enable filter for this column
+            placeholder: 'Search description', // placeholder for filter input
+            filterValue: '', // initial populated value for this filter
+            filterFn: this.filterFn// custom filter function that
+          }
+        },
+        {
+          label: 'Price',
+          field: 'price',
+          filterOptions: {
+            enabled: true, // enable filter for this column
+            placeholder: 'Price', // placeholder for filter input
+            filterValue: '', // initial populated value for this filter
+            filterFn: this.filterFn// custom filter function that
+          }
+        },
+        {
+          label: 'Stock',
+          field: 'stock',
+          type: 'number',
+          filterOptions: {
+            enabled: true, // enable filter for this column
+            placeholder: 'Search', // placeholder for filter input
+            filterValue: '', // initial populated value for this filter
+            filterFn: this.stockFilterFn// custom filter function that
+          }
+        },
+        {
+          label: 'UPC',
+          field: 'upc',
+          filterOptions: {
+            enabled: true, // enable filter for this column
+            placeholder: 'Search', // placeholder for filter input
+            filterValue: '', // initial populated value for this filter
+            filterFn: this.filterFn// custom filter function that
+          }
+        },
+
+        {
+          label: 'Action',
+          field: 'btn',
+          html: true
+        }
+      ],
+      books: [],
+      categoryId: '',
+      categoryName: '',
+      test: 'http://books.toscrape.com/media/cache/fe/72/fe72f0532301ec28892ae79a629a293c.jpg'
+    }
+  },
+  created () {
+    this.categoryId = this.$route.params.id
+    this.categoryName = this.$route.params.name
+    var urlBooksCat = urlCategories + this.categoryId + '/books'
+    this.getBooks(urlBooksCat)
+    console.log('api', urlBooksCat)
+  },
+  methods: {
+    getBooks: function (urlBooksCat) {
+      axios.get(urlBooksCat)
+        .then(res => { this.books = res.data })
+        .catch(err => console.log(err))
+    }
   }
 }
 </script>
