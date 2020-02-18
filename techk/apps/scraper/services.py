@@ -183,3 +183,20 @@ def cuncurrent_scrapper(url_paginas):
         # Convert the dataframe into a 
         # Dictionario {{colum name: vale,...},{colum name: vale,...}}
     return df_final.to_dict('records')    
+
+
+def get_data_scrapper():
+    '''
+    Get the data from the every category and
+    book in the website.
+    '''
+    url = 'http://books.toscrape.com/catalogue/page-1.html'
+    # Categories
+    categories_dict = get_categories(url)
+    url_paginas = get_urls_publicacion(url)
+    # Books
+    books_dict = cuncurrent_scrapper(url_paginas)
+    result = {'categories': categories_dict, 
+                'books': books_dict}
+    # Result as a dictionary
+    return result
