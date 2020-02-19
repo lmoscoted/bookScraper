@@ -68,7 +68,7 @@ import axios from 'axios'
 // const urlCategories = 'http://192.168.99.100:8000/categories/' // Docker on Windows IP Machine
 const urlCategories = 'http://127.0.0.1:8000/categories/'
 // const urlScraper = 'http://django-server:8000/categories/'
-// const urlScraper = 'http://192.168.99.100:8000/categories/' // Docker on Windows IP Machine
+// const urlScraper = 'http://192.168.99.100:8000/start/scraper/' // Docker on Windows IP Machine
 const urlScraper = 'http://127.0.0.1:8000/start/scraper/'
 // This loader will add an overlay with the text of 'Loading...'
 export default {
@@ -107,6 +107,10 @@ export default {
       error: false
 
     }
+  },
+  created () {
+    this.showButtonCat = this.$route.params.showButtonCat
+    console.log(this.showButtonCat)
   },
   methods: {
     startScraper: function () {

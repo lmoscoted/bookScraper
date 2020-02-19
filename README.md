@@ -3,7 +3,7 @@
 ## Objetivo
 ---
 Desarrollar una aplicacion en Django para que obtenga informacion de internet y esta
-pueda ser mostrada en otra aplicacion desarrollada en Vue. Además, de poder ser consultada la informacion por medio de una tabla se podran eliminar registros por medio de una API hecha con Django Rest Framework.
+pueda ser mostrada en otra aplicacion desarrollada en Vue. La informacion obtenida ademas de poder ser consultada, se podran eliminar registros empleando  una API hecha con Django Rest Framework.
 ## Instrucciones de uso
 ---
 1. Instalar cliente de [Docker](https://www.docker.com/)
@@ -39,24 +39,24 @@ Para el diseño del escraper se empleo las librerias [Requests](http://docs.pyth
 
 ### *Backend*
 
-La información obtenida por el scraper  se almaceno en una BBDD sqlite. Para ello se  modeló la BBDD, creando dos tablas una para categorias y otra para libros. Todo esto empleando migraciones. Ademas para el desarrollo de los modelos se emple el ORM de Django.
+La información obtenida por el scraper  se almaceno en una BBDD sqlite. Para ello se  modeló la BBDD, creando dos tablas una para categorias y otra para libros. Todo esto empleando migraciones. Ademas para el desarrollo de los modelos se empleo el ORM de Django.
 
 ### *Frontend*
 
-La información obtenida por el scraper debe se presentó en forma de tabla. Esta aplicación se desarrollo con [Vue.js 2.0](https://vuejs.org/) y para el diseno de la tabla se empleo el componente [Vue-good-table](https://xaksis.github.io/vue-good-table/), asi como las librerias [Axios](https://www.npmjs.com/package/axios) y [Bootstrap-vue](https://bootstrap-vue.js.org/)
+La información obtenida por el scraper  se presentó en forma de tabla. Esta aplicación se desarrollo con [Vue.js 2.0](https://vuejs.org/) y para el diseno de la tabla se empleo el componente [Vue-good-table](https://xaksis.github.io/vue-good-table/), asi como las librerias [Axios](https://www.npmjs.com/package/axios) y [Bootstrap-vue](https://bootstrap-vue.js.org/)
 
 Funcionalidades desarrolladas
 * Un botón que inicie/ejecute el scraper para obtener los datos del sitio web
-* Un listado de Categorías obtenidas por el scrapers.
-* Al seleccionar una categoría, la tabla sólo mostrará libros de esa categoría
-* La tabla debe tener un buscador por los atributos que posee
-* Se debe poder eliminar registros de la tabla que se presente
+* Un botón que obtiene el listado de Categorías obtenidas por el scrapers.
+* Un boton en cada categoria que al seleccionarla, la tabla sólo mostrará libros de esa categoría
+* Buscadores para cada uno de  los atributos de la tabla de categorias y libros
+* Un boton que  elimine registros ya sea de la tabla que se presente
 
 
 ## Consideraciones
 ---
-* Se requiere que se consulte primero por las categorias para que se puedan obtener los datos de los libros
-* No se requiere autenticacion para borrar los registros de la BB.DD
-* El sistema almacena los datos en la BB.DD, y estos persisten hasta que se reinicie la aplicacion. Luego que se ejecuta el 
+* Se supuso que cada vez que se inicie el escraper todos los registros son actualizados en la base de datos. Es decir, que se guardara solo la informacion mas reciente de la pagina.
+* No se implemento un sistema de autenticacion para borrar los registros de la BB.DD
+* Se diseno la aplicacion frontend de tal manera que se inicie el scraper para poder obtener la informacion mas actualizada en la BD y asi consultarla en las tablas, a traves de un boton para obtener las categorias.
 * 
 
