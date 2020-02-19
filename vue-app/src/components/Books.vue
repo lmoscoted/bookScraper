@@ -58,11 +58,11 @@ import { VueGoodTable } from 'vue-good-table'
 import axios from 'axios'
 
 // const urlBooks = 'http://django-server:8000/books/'
-const urlBooks = 'http://192.168.99.100:8000/books/' // Docker on windows
-// const urlBooks = 'http://127.0.0.1:8000/books/'
+// const urlBooks = 'http://192.168.99.100:8000/books/' // Docker on windows
+const urlBooks = 'http://127.0.0.1:8000/books/'
 // const urlCategories = 'http://django-server:8000/categories/'// Docker url
-const urlCategories = 'http://192.168.99.100:8000/categories/' // # Docker on windows
-// const urlCategories = 'http://127.0.0.1:8000/categories/' // Docker url
+// const urlCategories = 'http://192.168.99.100:8000/categories/' // # Docker on windows
+const urlCategories = 'http://127.0.0.1:8000/categories/' // Docker url
 
 export default {
   name: 'Books',
