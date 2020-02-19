@@ -8,23 +8,22 @@ pueda ser mostrada en otra aplicacion desarrollada en Vue. Además, de poder ser
 ---
 1. Instalar cliente de [Docker](https://www.docker.com/)
 2. Instalar [Docker Compose](https://docs.docker.com/compose/)
-6. Levantar el proyecto:
-    * `$ cd path/to/project/fullstack/techk`
+3. Levantar el proyecto:
+    * `$ cd path/to/project/scraper_techk`
     * `$ docker-compose up`
-    * Verificar correcto funcionamiento en [http://localhost:8000/](http://localhost:8000/)
-7. Desarrollar lo que se indica. Si existen supuestos, estos deben definirse claramente en el README
-8. Notificar mediante email cuando este listo y enviar el link del repositorio privado.
+    * Espere hasta que docker-compose termine de configurar los servicios. Al final, el servicio de Django le indicara que paso las pruebas de sistema. 
+    
+4. Verificar correcto funcionamiento de la aplicacion Django en [http://localhost:8000/](http://localhost:8000/); para el caso de la aplicacion Vue se debe ingresar a [http://localhost:8080/](http://localhost:8080/)     
 
 
-## Instrucciones de desarrollo
+## Aplicacion desarrollada
 ---
-Desarrollar un scraper que permita obtener información de [esta página web](http://books.toscrape.com/index.html), almacenarla en BBDD y luego visualizarla en una interfaz web.
+Se desarrollo un scraper que permitió obtener información de [la página web](http://books.toscrape.com/index.html), almacenarla en BBDD y luego visualizarla en una interfaz web.
 
-Lo anterior será bajo el uso del framework [Django 2.0.13](https://www.djangoproject.com/).
+Lo anterior se desarrolló bajo el uso del framework [Django 2.0.13](https://www.djangoproject.com/).
 
 ### *Web Scraping*
-
-Se requiere obtener del [sitio web](http://books.toscrape.com/index.html) la siguiente información:
+Se requierió obtener del [sitio web](http://books.toscrape.com/index.html) la siguiente información:
 
 * Listado de categorías (travel, mystery, etc.)
 * Información de cada libro:
@@ -36,77 +35,28 @@ Se requiere obtener del [sitio web](http://books.toscrape.com/index.html) la sig
   * Product Description
   * UPC
 
-***Nota:*** Se recomienda usar las librerías [Requests](http://docs.python-requests.org/en/master/) y [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) para resolver este punto.
+Para el diseño del escraper se empleo las librerias [Requests](http://docs.python-requests.org/en/master/) y [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/). Asimismo, se empleo el módulo [Cuncurrent.futures](https://docs.python.org/3/library/concurrent.futures.html), para lanzar el scraper de manera concurrente.
 
 ### *Backend*
 
-La información obtenida por el scraper (en la sección anterior) debe ser almacenada en una BBDD sqlite. Para ello se debe modelar la BBDD, crear los modelos de Django y sus respectivas migraciones.
+La información obtenida por el scraper  se almaceno en una BBDD sqlite. Para ello se  modeló la BBDD, creando dos tablas una para categorias y otra para libros. Todo esto empleando migraciones. Ademas para el desarrollo de los modelos se emple el ORM de Django.
 
 ### *Frontend*
 
-La información obtenida por el scraper debe ser presentada en forma de tabla. El diseño queda a libre elección del desarrollador.
+La información obtenida por el scraper debe se presentó en forma de tabla. Esta aplicación se desarrollo con [Vue.js 2.0](https://vuejs.org/) y para el diseno de la tabla se empleo el componente [Vue-good-table](https://xaksis.github.io/vue-good-table/), asi como las librerias [Axios](https://www.npmjs.com/package/axios) y [Bootstrap-vue](https://bootstrap-vue.js.org/)
 
-¿Qué considera?
-* Un botón que inicie/ejecute el scraper para obtener los datos del sitio web(*)
+Funcionalidades desarrolladas
+* Un botón que inicie/ejecute el scraper para obtener los datos del sitio web
 * Un listado de Categorías obtenidas por el scrapers.
 * Al seleccionar una categoría, la tabla sólo mostrará libros de esa categoría
 * La tabla debe tener un buscador por los atributos que posee
 * Se debe poder eliminar registros de la tabla que se presente
 
-***Notas:***
-(*): Si no se dispone de los datos obtenidos por el scraper, debido a la no realización de esta etapa, los datos deben ser cargados desde un archivo en formato json. Este archivo debe contener la información mínima para que la interfaz web funcione correctamente, es decir:
-* Al menos 3 categorías
-* Al menos 5 libros por categoría
-* Estructura del archivo JSON es de la siguiente forma:
-```
-[{
-    "categories": [
-        {
-            "id": 1,
-            "name": "Travel"
-        }, {
-            "id": 2,
-            "name": "Mystery"
-        }, {
-            "id": 3,
-            "name": "Historical Fiction"
-        }
-    ],
-    "books": [
-        {
-            "id": 1;
-            "category_id": 1,
-            "title": "It's Only the Himalayas",
-            "thumbnail_url": "http://books.toscrape.com/media/cache/6d/41/6d418a73cc7d4ecfd75ca11d854041db.jpg",
-            "price": "£45.17",
-            "stock": true,
-            "product_description": "Wherever you go, whatever you do, just ...",
-            "upc": "a22124811bfa8350"
-        }
-    ]
-}]
-```
 
-## Restricciones
+## Consideraciones
 ---
-* No se debe usar el Admin de Django
-* Usar ORM de Django (no raw queries)
-* Si entregas la prueba con un sólo commit, no la revisaremos. El correcto uso de GIT es importante para nosotros
-
-
-## Bonus
----
-* Uso de alguna librería en el frontend. Idealmente `React`
-* Webscraping usando la librería `Requests` y `BeautifulSoup`
-* Uso de `Django Rest Framework` para la comunicación entre frontend y backend
-* Uso de test (unittest con [pytest](https://docs.pytest.org/en/latest/))
-
-
-## En qué nos fijaremos
----
-* Correcto uso del ORM
-* Correcto modelamiento la BBDD
-* Correcto uso de GIT
-* Patrones de diseño
-* Orden del código
+* Se requiere que se consulte primero por las categorias para que se puedan obtener los datos de los libros
+* No se requiere autenticacion para borrar los registros de la BB.DD
+* El sistema almacena los datos en la BB.DD, y estos persisten hasta que se reinicie la aplicacion. Luego que se ejecuta el 
+* 
 
