@@ -1,10 +1,18 @@
 <template>
   <b-container fluid>
     <br>
-    <button class="btn btn-success" @click="getData">Start scraper</button>
+     <b-button-group>
+    <button class="btn btn-success" @click="startScraper">Start scraper</button>
+    <button class="btn btn-primary" v-show="showButtonCat" @click="getCategories">Get Categories</button>
+    </b-button-group>
     <br>
     <br>
-    <vue-good-table
+    <div v-if="error">
+      <p class="error">Huston, we have a problem!... Please try again.</p>
+    </div>
+    <div v-else>
+    <b-spinner v-if="loading"  variant="primary" style="width: 5rem; height: 5rem;" label="Loading..."></b-spinner>
+    <vue-good-table v-else
       :columns="columns"
       :rows="rows"
       theme="black-rhino"
@@ -42,10 +50,10 @@
       </span>
   </template>
   <div slot="emptystate">
-    <p style="font-weight: bold; color: red">No data, please start the scraper in order to get data</p>
+    <p style="font-weight: bold; color: red">No data, please get categories</p>
   </div>
     </vue-good-table>
-
+  </div>
   </b-container>
 </template>
 
@@ -56,10 +64,13 @@ import 'vue-good-table/dist/vue-good-table.css'
 import { VueGoodTable } from 'vue-good-table'
 import axios from 'axios'
 
-const urlCategories = 'http://django-server:8000/categories/'
+// const urlCategories = 'http://django-server:8000/categories/'
 // const urlCategories = 'http://192.168.99.100:8000/categories/' // Docker on Windows IP Machine
-// const urlCategories = 'http://127.0.0.1:8000/categories/'
-
+const urlCategories = 'http://127.0.0.1:8000/categories/'
+// const urlScraper = 'http://django-server:8000/categories/'
+// const urlScraper = 'http://192.168.99.100:8000/categories/' // Docker on Windows IP Machine
+const urlScraper = 'http://127.0.0.1:8000/start/scraper/'
+// This loader will add an overlay with the text of 'Loading...'
 export default {
   name: 'Home',
   components: {
@@ -90,11 +101,30 @@ export default {
           html: true
         }
       ],
-      rows: []
+      rows: [],
+      loading: false,
+      showButtonCat: false,
+      error: false
+
     }
   },
   methods: {
-    getData: async function () {
+    startScraper: function () {
+      this.showButtonCat = false
+      this.loading = true
+      this.rows = []
+      axios.get(urlScraper)
+        .then(res => {
+          this.showButtonCat = true
+          console.log(res.data)
+        })
+        .catch(err => {
+          console.log(err)
+          this.error = true
+        })
+        .finally(() => { this.loading = false })
+    },
+    getCategories: async function () {
       await axios.get(urlCategories)
         .then(res => { this.rows = res.data })
         .catch(err => console.log(err))
@@ -127,3 +157,10 @@ export default {
   }
 }
 </script>
+<style scoped>
+.error {
+  color:red;
+  font: outline;
+  font-weight: bolder;
+}
+</style>
