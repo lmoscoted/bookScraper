@@ -13,7 +13,8 @@ pueda ser mostrada en otra aplicacion desarrollada en Vue. La informacion obteni
     * `$ docker-compose up`
     * Espere hasta que docker-compose termine de configurar los servicios. Al final, el servicio de Django le indicara que paso las pruebas de sistema. 
     
-4. Verificar correcto funcionamiento de la aplicacion Django en [http://localhost:8000/](http://localhost:8000/); para el caso de la aplicacion Vue se debe ingresar a [http://localhost:8080/](http://localhost:8080/)     
+4. Verificar correcto funcionamiento de la aplicacion Django en [http://localhost:8000/](http://localhost:8000/); para el caso de la aplicacion Vue se debe ingresar a [http://localhost:8080/](http://localhost:8080/) 
+   * Sino aparecen las aplicaciones en las direccion indicada cambiar por http://127.0.0.1:8000 y http://127.0.0.1:8080 respectivamente.     
 
 
 ## Aplicacion desarrollada
@@ -50,7 +51,7 @@ Funcionalidades desarrolladas
 * Un botón que obtiene el listado de Categorías obtenidas por el scrapers.
 * Un boton en cada categoria que al seleccionarla, la tabla sólo mostrará libros de esa categoría
 * Buscadores para cada uno de  los atributos de la tabla de categorias y libros
-* Un boton que  elimine registros ya sea de la tabla que se presente
+* Un boton que  elimina registros ya sea de la tabla que se presente
 
 
 ## Consideraciones
@@ -58,5 +59,4 @@ Funcionalidades desarrolladas
 * Se supuso que cada vez que se inicie el escraper todos los registros son actualizados en la base de datos. Es decir, que se guardara solo la informacion mas reciente de la pagina.
 * No se implemento un sistema de autenticacion para borrar los registros de la BB.DD
 * Se diseno la aplicacion frontend de tal manera que se inicie el scraper para poder obtener la informacion mas actualizada en la BD y asi consultarla en las tablas, a traves de un boton para obtener las categorias.
-* 
-
+  
