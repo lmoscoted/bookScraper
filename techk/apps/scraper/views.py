@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.http import HttpResponse
+from django.db import transaction
 from django.shortcuts import render
 from rest_framework import viewsets, generics, mixins
 
@@ -10,6 +11,7 @@ from .serializer import CategorySerializer, BookSerializer
 from .scraping import get_data_scrapper
 
 
+@transaction.atomic
 def startScraper(request):
     ''''
     First, delete all registers in both
@@ -17,30 +19,37 @@ def startScraper(request):
     the sraper and finally, store the data
     into the DB.
     '''
-    #Delete all records in the category table 
-    # (truncate)
-    Category.objects.all().delete()
-    # Delete all records in the book table 
-    # (truncate)
-    Book.objects.all().delete()
 
     # Data from the scrapper (books and categories)
     scraper_data = get_data_scrapper()
     categories = scraper_data['categories']
     books = scraper_data['books']
 
-    
+    # Create categories and book instances lists from
+    # the data gotten from the scraper
+    category_instances = [Category(**category) 
+                        for category in categories]
+    book_instances = [Book(**book) for book in books]
 
-    # Save categories into DB 
-    for category in categories:
-        category_db = Category(**category)
-        category_db = category_db.save()
-    # Save books into DB    
-    for book in books:
-        book_db = Book(**book)
-        book_db = book_db.save()
+    # Clean and insert the new records.
+    cleanPopulateDB(book_instances,category_instances)
 
     return HttpResponse('Scraping done!')
+
+
+def cleanPopulateDB(book_instances,category_instances):
+    '''
+    Clean the old records and insert the new records
+    '''
+    #Delete old records in the category and book
+    #  table 
+    # (truncate)
+    Category.objects.all().delete()
+    Book.objects.all().delete()
+
+    # Bulk insert with the new data
+    Category.objects.bulk_create(category_instances)
+    Book.objects.bulk_create(book_instances)
 
 
 
