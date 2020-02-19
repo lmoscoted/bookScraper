@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from django.db import transaction
 from django.shortcuts import render
 from rest_framework import viewsets, generics, mixins
@@ -34,7 +34,7 @@ def startScraper(request):
     # Clean and insert the new records.
     cleanPopulateDB(book_instances,category_instances)
 
-    return HttpResponse('Scraping done!')
+    return JsonResponse({'result':'OK'})
 
 
 def cleanPopulateDB(book_instances,category_instances):
@@ -42,8 +42,7 @@ def cleanPopulateDB(book_instances,category_instances):
     Clean the old records and insert the new records
     '''
     #Delete old records in the category and book
-    #  table 
-    # (truncate)
+    #  table  (truncate)
     Category.objects.all().delete()
     Book.objects.all().delete()
 
@@ -61,8 +60,7 @@ class CategoryView(mixins.DestroyModelMixin,
 
     serializer_class = CategorySerializer 
 
-    queryset = Category.objects.all()               
-
+    queryset = Category.objects.all()
 
 # Class view for only delete books
 class BookView(mixins.DestroyModelMixin,
