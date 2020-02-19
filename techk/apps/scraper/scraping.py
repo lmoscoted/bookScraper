@@ -6,6 +6,7 @@ import pandas as pd
 import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
+from .models import Category, Book
 
 
 # The url to be scrapped
@@ -201,3 +202,4 @@ def get_data_scrapper():
                 'books': books_dict}
     # Result as a dictionary
     return result
+

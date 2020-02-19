@@ -16,10 +16,12 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.urls import path
+from apps.scraper.views import startScraper
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^start/scraper/', startScraper),
     path('',include('apps.scraper.urls')),
     # url(r'^api-auth/', include('rest_framework.urls'))
 ]

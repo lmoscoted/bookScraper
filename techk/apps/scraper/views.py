@@ -1,21 +1,23 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.http import HttpResponse
 from django.shortcuts import render
 from rest_framework import viewsets, generics, mixins
 
 from .models import Category, Book
 from .serializer import CategorySerializer, BookSerializer
-from .services import get_data_scrapper
+from .scraping import get_data_scrapper
 
-# Class view for only list, delete categories
-class CategoryView(mixins.DestroyModelMixin,
-                    mixins.ListModelMixin,
-                    mixins.RetrieveModelMixin,
-                    viewsets.GenericViewSet):
 
-    serializer_class = CategorySerializer 
-    # Delete all records in the category table 
+def startScraper(request):
+    ''''
+    First, delete all registers in both
+    categories and book table, then start 
+    the sraper and finally, store the data
+    into the DB.
+    '''
+    #Delete all records in the category table 
     # (truncate)
     Category.objects.all().delete()
     # Delete all records in the book table 
@@ -27,6 +29,8 @@ class CategoryView(mixins.DestroyModelMixin,
     categories = scraper_data['categories']
     books = scraper_data['books']
 
+    
+
     # Save categories into DB 
     for category in categories:
         category_db = Category(**category)
@@ -35,6 +39,18 @@ class CategoryView(mixins.DestroyModelMixin,
     for book in books:
         book_db = Book(**book)
         book_db = book_db.save()
+
+    return HttpResponse('Scraping done!')
+
+
+
+#---------------API----------------------------
+# Class view for only list, delete categories
+class CategoryView(mixins.DestroyModelMixin,
+                    mixins.ListModelMixin,
+                    viewsets.GenericViewSet):
+
+    serializer_class = CategorySerializer 
 
     queryset = Category.objects.all()               
 

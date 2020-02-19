@@ -56,7 +56,7 @@ import 'vue-good-table/dist/vue-good-table.css'
 import { VueGoodTable } from 'vue-good-table'
 import axios from 'axios'
 
-const urlCategories = 'django-server:8000/categories/'
+const urlCategories = 'http://django-server:8000/categories/'
 // const urlCategories = 'http://192.168.99.100:8000/categories/' // Docker on Windows IP Machine
 // const urlCategories = 'http://127.0.0.1:8000/categories/'
 
